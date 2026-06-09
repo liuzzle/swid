@@ -1,0 +1,29 @@
+{
+  "input_root": "voxceleb_data/vox1/wav",
+  "output_root": "voxceleb_data/processed_test",
+  "seed": 42,
+  "target_sr": 16000,
+  "trim_silence": true,
+  "trim_top_db": 30.0,
+  "durations": [
+    0.5,
+    1.0,
+    3.0,
+    5.0
+  ],
+  "clips_per_utterance": 1,
+  "write_clips": true,
+  "num_discovered_files": 4874,
+  "num_kept_utterances": 4874,
+  "split_utterance_counts": {
+    "train": 3902,
+    "val": 486,
+    "test": 486
+  },
+  "split_speaker_counts": {
+    "train": 40,
+    "val": 40,
+    "test": 40
+  },
+  "dropped_speakers": []
+}
