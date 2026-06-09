@@ -5,4 +5,8 @@ logging-changes.md
 *.wav
 *.ckpt
 
-voxceleb_data
+voxceleb_data/.cache/*
+voxceleb_data/processed_test/clips/*
+voxceleb_data/processed_test/preprocessed_wav/*
+voxceleb_data/processed_test/embeddings/*
+
