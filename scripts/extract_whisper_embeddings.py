@@ -22,6 +22,28 @@ def ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
+def compute_out_path(wav_path: Path, out_dir: Path, clips_root: Path | None, pool: str) -> Path:
+    """Build the embedding output path, preserving the clip's nested structure.
+
+    Clip stems (e.g. ``00004__clip00``) are NOT unique: the same name recurs
+    across every duration, video, and speaker. Naming outputs by stem alone
+    collides 19k clips into a handful of files. Mirror the x-vector extractor by
+    keeping the path relative to ``clips_root`` (e.g.
+    ``0.5s/train/id10270/<video>/00004__clip00``); fall back to the bare stem
+    only when the wav lives outside ``clips_root``.
+    """
+    suffix = "_whisper_layers.npz" if pool == "none" else "_whisper_pooled.npy"
+    rel = None
+    if clips_root is not None:
+        try:
+            rel = wav_path.relative_to(clips_root)
+        except ValueError:
+            rel = None
+    if rel is None:
+        return out_dir / f"{wav_path.stem}{suffix}"
+    return out_dir / rel.parent / f"{rel.stem}{suffix}"
+
+
 def load_audio(path: Path, sr: int = 16000):
     data, samplerate = sf.read(str(path))
     if samplerate != sr:
@@ -77,6 +99,7 @@ def main():
     parser.add_argument("--input-wav", type=Path, help="Single input wav file")
     parser.add_argument("--manifest", type=Path, help="CSV with a column 'wav_path' listing files to process")
     parser.add_argument("--out-dir", type=Path, required=True, help="Directory to write embeddings")
+    parser.add_argument("--clips-root", type=Path, default=Path("voxceleb_data/processed_test/clips"), help="Root of the clip tree; output paths mirror each clip's location relative to this root to avoid stem collisions")
     parser.add_argument("--model-name", default="openai/whisper-base", help="Hugging Face model name")
     parser.add_argument("--pool", choices=["mean", "max", "none"], default="mean", help="Pooling over time")
     parser.add_argument("--batch-size", type=int, default=1, help="Number of files to process in a batch (for CPU/GPU)")
@@ -124,12 +147,7 @@ def main():
         audios = []
         paths_to_process = []
         for p in paths:
-            stem = Path(p).stem
-            if args.pool == "none":
-                out_name = f"{stem}_whisper_layers.npz"
-            else:
-                out_name = f"{stem}_whisper_pooled.npy"
-            out_path = Path(args.out_dir) / out_name
+            out_path = compute_out_path(Path(p), Path(args.out_dir), args.clips_root, args.pool)
             if args.skip_existing and out_path.exists():
                 manifest_rows.append({"wav_path": str(p), "embedding_path": str(out_path), "status": "skipped"})
                 continue
