@@ -56,7 +56,7 @@ def load_audio(path: Path, sr: int = 16000):
     return data.astype(np.float32), samplerate
 
 
-def extract_for_file(path: Path, model, processor, device, pool: str, out_dir: Path):
+def extract_for_file(path: Path, model, processor, device, pool: str, out_dir: Path, clips_root: Path | None = None):
     audio, sr = load_audio(path, sr=processor.feature_extractor.sampling_rate)
     inputs = processor(audio, sampling_rate=sr, return_tensors="pt")
     input_features = inputs.input_features.to(device)
@@ -83,15 +83,15 @@ def extract_for_file(path: Path, model, processor, device, pool: str, out_dir: P
         else:
             raise ValueError(f"Unknown pool: {pool}")
 
-    out_dir.mkdir(parents=True, exist_ok=True)
-    stem = path.stem
+    out_path = compute_out_path(path, out_dir, clips_root, pool)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     if pool == "none":
         # save raw per-layer arrays into an npz
-        np.savez_compressed(out_dir / f"{stem}_whisper_layers.npz", *per_layer)
+        np.savez_compressed(out_path, *per_layer)
     else:
         # stack into (num_layers, hidden)
         stacked = np.stack(per_layer, axis=0)
-        np.save(out_dir / f"{stem}_whisper_pooled.npy", stacked)
+        np.save(out_path, stacked)
 
 
 def main():
