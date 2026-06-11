@@ -1,0 +1,22 @@
+{
+  "output_root": "voxceleb_data/processed_test",
+  "whisper_manifest": "voxceleb_data/processed_test/embeddings/whisper_clips/whisper_manifest.csv",
+  "clips_metadata": "voxceleb_data/processed_test/metadata/clips.csv",
+  "total_rows": 19496,
+  "split_counts": {
+    "train": 15608,
+    "val": 1944,
+    "test": 1944
+  },
+  "num_speakers": 40,
+  "duration_counts": {
+    "0.500": 4874,
+    "1.000": 4874,
+    "3.000": 4874,
+    "5.000": 4874
+  },
+  "manifest_status_counts": {
+    "ok": 19496
+  },
+  "skipped_non_ok": 0
+}
