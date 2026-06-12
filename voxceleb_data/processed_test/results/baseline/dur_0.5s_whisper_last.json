@@ -1,0 +1,26 @@
+{
+  "train_csv": "voxceleb_data/processed_test/metadata/dur_0.5s/whisper_train.csv",
+  "test_csv": "voxceleb_data/processed_test/metadata/dur_0.5s/whisper_test.csv",
+  "emb_type": "whisper",
+  "whisper_layer": "-1",
+  "n_train": 3902,
+  "n_test": 486,
+  "n_speakers": 40,
+  "embedding_dim": 512,
+  "classifiers": {
+    "cosine": {
+      "accuracy": 0.14814814814814814,
+      "elapsed_sec": 0.0014652920071966946
+    },
+    "knn": {
+      "accuracy": 0.22633744855967078,
+      "k": 5,
+      "elapsed_sec": 0.02837474999250844
+    },
+    "svm": {
+      "accuracy": 0.2962962962962963,
+      "C": 1.0,
+      "elapsed_sec": 2.849892541009467
+    }
+  }
+}
