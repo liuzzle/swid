@@ -2,10 +2,9 @@
 """
 Slice the all-duration manifests into per-duration train/val/test manifests.
 
-Step 10 of the project plan. The clip generation (step 5) and embedding
-extraction (steps 7/9) already produce data for all four durations in a single
+The clip generation and embedding extraction already produce data for all four durations in a single
 CSV each. This script slices those CSVs by ``clip_duration_sec`` so that
-downstream classifier experiments (step 11/12) can load a single clean manifest
+downstream classifier experiments can load a single clean manifest
 per duration rather than filtering on the fly.
 
 Output layout under <output-root>/metadata/:

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Step 14 — Analyze results and create paper figures.
+Analyze results and create paper figures.
 
-Consolidates the step-11/12/13 experiment outputs into publication-ready figures
-and tables.  Three deliverables, matching ``detailed_todo.md`` step 14
-("confusion matrices, accuracy-vs-duration plots, and per-speaker analysis"):
+Consolidates the experiment outputs into publication-ready figures
+and tables.  Three deliverables:
 
   1. CONFUSION MATRICES (new)
      For the best classifier of each embedding type (auto-selected by mean
@@ -21,7 +20,7 @@ and tables.  Three deliverables, matching ``detailed_todo.md`` step 14
      classifier, plus a ``hard_speakers.csv`` ranking speakers by mean recall.
 
 Confusion-matrix predictions are produced by re-running the exact same classifier
-functions used in steps 11–13 (imported from ``classify_speakers``) on the same
+functions used in previous steps (imported from ``classify_speakers``) on the same
 manifests, so they are consistent with the reported accuracies.  The other two
 deliverables read the already-written ablation CSVs.
 

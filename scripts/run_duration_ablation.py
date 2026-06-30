@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Step 12 — Duration ablation experiments.
+Duration ablation experiments.
 
 Systematically evaluates each embedding type at each clip duration and records
-**both per-class (per-speaker) and global metrics**.  This extends the step-11
+**both per-class (per-speaker) and global metrics**.  This extends the 
 baseline sweep (which logged global accuracy only) with:
 
   * macro / weighted precision, recall and F1 (global, label-balanced view), and

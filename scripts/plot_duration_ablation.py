@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Step 12 plotting — accuracy/F1 vs duration, plus per-speaker variability.
+Plotting — accuracy/F1 vs duration, plus per-speaker variability.
 
 Reads the CSVs written by ``run_duration_ablation.py``
 (``global_metrics.csv`` and ``per_class_metrics.csv``) and renders:

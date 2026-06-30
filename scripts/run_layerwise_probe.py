@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Step 13 — Layerwise Whisper probing.
+Layerwise Whisper probing.
 
 Probes **which Whisper encoder layer encodes the most speaker information** by
 running the same three classifiers (cosine nearest-centroid, kNN, LinearSVC) on
@@ -9,8 +9,8 @@ duration.
 
 Background: the pooled Whisper-base embeddings have shape (n_layers, hidden) =
 (7, 512).  Index 0 is the convolutional/embedding output that feeds the encoder;
-indices 1..6 are the outputs of the 6 encoder transformer blocks.  Steps 11/12
-only ever used the *last* layer (-1) or the *mean* across layers; this step opens
+indices 1..6 are the outputs of the 6 encoder transformer blocks. Previous steps
+only ever used the last layer (-1) or the *mean* across layers; this step opens
 that up and evaluates every layer on its own so we can rank them.
 
 Sweep grid:
