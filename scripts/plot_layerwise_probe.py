@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Step 13 plotting — speaker-ID performance vs Whisper layer.
+Plotting — speaker-ID performance vs Whisper layer.
 
 Reads the CSV written by ``run_layerwise_probe.py`` (``layer_metrics.csv``) and
 renders:
@@ -25,6 +25,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")  # headless / no display
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
 
@@ -72,7 +73,16 @@ def _layer_plot(df: pd.DataFrame, metric: str, title: str, out_path: Path) -> No
         ax.grid(True, alpha=0.3)
         ax.set_ylim(0, 100)
     axes[0].set_ylabel(f"{title} (%)")
-    axes[-1].legend(title="classifier (— = mean)", loc="upper left", fontsize=8)
+    # Legend on the first panel (its top-left is empty), with explicit solid
+    # "single layer" and dashed "mean" swatches per classifier.
+    handles = [
+        Line2D([0], [0], color=CLF_COLORS[clf], marker="o", ls="-", label=clf)
+        for clf in CLF_ORDER
+    ]
+    handles.append(
+        Line2D([0], [0], color="gray", ls="--", lw=1, label="mean")
+    )
+    axes[0].legend(handles=handles, title="classifier", loc="upper left", fontsize=8)
     fig.suptitle(f"{title} vs Whisper layer", fontsize=13)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     fig.savefig(out_path, dpi=150)

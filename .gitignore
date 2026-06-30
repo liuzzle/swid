@@ -1,4 +1,3 @@
-methodology.md
 detailed_todo.md
 logging-changes.md
 paper_submission_guidelines.md
@@ -14,3 +13,5 @@ voxceleb_data/processed_test/preprocessed_wav/*
 voxceleb_data/processed_test/embeddings/*
 
 
+paper/*
+scripts/pl/*
